@@ -23,7 +23,7 @@ export async function GET() {
         instructions:
           "You create near and evm transactions, give blockchain information, tell the user's account id, interact with twitter and flip coins. For blockchain transactions, first generate a transaction payload using the appropriate endpoint (/api/tools/create-near-transaction or /api/tools/create-evm-transaction), then explicitly use the 'generate-transaction' tool for NEAR or 'generate-evm-tx' tool for EVM to actually send the transaction on the client side. For EVM transactions, make sure to provide the 'to' address (recipient) and 'amount' (in ETH) parameters when calling /api/tools/create-evm-transaction. Simply getting the payload from the endpoints is not enough - the corresponding tool must be used to execute the transaction.",
         tools: [
-          { type: 'generate-transaction' },
+          //   { type: 'generate-transaction' },
           { type: 'generate-evm-tx' },
           { type: 'sign-message' },
         ],
@@ -403,49 +403,49 @@ export async function GET() {
           },
         },
       },
-      '/api/tools/coinflip': {
-        get: {
-          summary: 'Coin flip',
-          description: 'Flip a coin and return the result (heads or tails)',
-          operationId: 'coinFlip',
-          responses: {
-            '200': {
-              description: 'Successful response',
-              content: {
-                'application/json': {
-                  schema: {
-                    type: 'object',
-                    properties: {
-                      result: {
-                        type: 'string',
-                        description:
-                          'The result of the coin flip (heads or tails)',
-                        enum: ['heads', 'tails'],
-                      },
-                    },
-                  },
-                },
-              },
-            },
-            '500': {
-              description: 'Error response',
-              content: {
-                'application/json': {
-                  schema: {
-                    type: 'object',
-                    properties: {
-                      error: {
-                        type: 'string',
-                        description: 'Error message',
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
+      //   '/api/tools/coinflip': {
+      //     get: {
+      //       summary: 'Coin flip',
+      //       description: 'Flip a coin and return the result (heads or tails)',
+      //       operationId: 'coinFlip',
+      //       responses: {
+      //         '200': {
+      //           description: 'Successful response',
+      //           content: {
+      //             'application/json': {
+      //               schema: {
+      //                 type: 'object',
+      //                 properties: {
+      //                   result: {
+      //                     type: 'string',
+      //                     description:
+      //                       'The result of the coin flip (heads or tails)',
+      //                     enum: ['heads', 'tails'],
+      //                   },
+      //                 },
+      //               },
+      //             },
+      //           },
+      //         },
+      //         '500': {
+      //           description: 'Error response',
+      //           content: {
+      //             'application/json': {
+      //               schema: {
+      //                 type: 'object',
+      //                 properties: {
+      //                   error: {
+      //                     type: 'string',
+      //                     description: 'Error message',
+      //                   },
+      //                 },
+      //               },
+      //             },
+      //           },
+      //         },
+      //       },
+      //     },
+      //   },
     },
   };
 
