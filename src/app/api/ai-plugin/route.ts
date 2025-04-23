@@ -24,7 +24,7 @@ export async function GET() {
           "You create near and evm transactions, give blockchain information, tell the user's account id, interact with twitter and flip coins. For blockchain transactions, first generate a transaction payload using the appropriate endpoint (/api/tools/create-near-transaction or /api/tools/create-evm-transaction), then explicitly use the 'generate-transaction' tool for NEAR or 'generate-evm-tx' tool for EVM to actually send the transaction on the client side. For EVM transactions, make sure to provide the 'to' address (recipient) and 'amount' (in ETH) parameters when calling /api/tools/create-evm-transaction. Simply getting the payload from the endpoints is not enough - the corresponding tool must be used to execute the transaction.",
         tools: [
           { type: 'generate-transaction' },
-          //   { type: 'generate-evm-tx' },
+          { type: 'generate-evm-tx' },
           { type: 'sign-message' },
         ],
       },
@@ -106,102 +106,102 @@ export async function GET() {
           },
         },
       },
-      '/api/tools/twitter': {
-        get: {
-          operationId: 'getTwitterShareIntent',
-          summary: 'Generate a Twitter share intent URL',
-          description:
-            'Creates a Twitter share intent URL based on provided parameters',
-          parameters: [
-            {
-              name: 'text',
-              in: 'query',
-              required: true,
-              schema: {
-                type: 'string',
-              },
-              description: 'The text content of the tweet',
-            },
-            {
-              name: 'url',
-              in: 'query',
-              required: false,
-              schema: {
-                type: 'string',
-              },
-              description: 'The URL to be shared in the tweet',
-            },
-            {
-              name: 'hashtags',
-              in: 'query',
-              required: false,
-              schema: {
-                type: 'string',
-              },
-              description: 'Comma-separated hashtags for the tweet',
-            },
-            {
-              name: 'via',
-              in: 'query',
-              required: false,
-              schema: {
-                type: 'string',
-              },
-              description: 'The Twitter username to attribute the tweet to',
-            },
-          ],
-          responses: {
-            '200': {
-              description: 'Successful response',
-              content: {
-                'application/json': {
-                  schema: {
-                    type: 'object',
-                    properties: {
-                      twitterIntentUrl: {
-                        type: 'string',
-                        description: 'The generated Twitter share intent URL',
-                      },
-                    },
-                  },
-                },
-              },
-            },
-            '400': {
-              description: 'Bad request',
-              content: {
-                'application/json': {
-                  schema: {
-                    type: 'object',
-                    properties: {
-                      error: {
-                        type: 'string',
-                        description: 'Error message',
-                      },
-                    },
-                  },
-                },
-              },
-            },
-            '500': {
-              description: 'Error response',
-              content: {
-                'application/json': {
-                  schema: {
-                    type: 'object',
-                    properties: {
-                      error: {
-                        type: 'string',
-                        description: 'Error message',
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
+      //   '/api/tools/twitter': {
+      //     get: {
+      //       operationId: 'getTwitterShareIntent',
+      //       summary: 'Generate a Twitter share intent URL',
+      //       description:
+      //         'Creates a Twitter share intent URL based on provided parameters',
+      //       parameters: [
+      //         {
+      //           name: 'text',
+      //           in: 'query',
+      //           required: true,
+      //           schema: {
+      //             type: 'string',
+      //           },
+      //           description: 'The text content of the tweet',
+      //         },
+      //         {
+      //           name: 'url',
+      //           in: 'query',
+      //           required: false,
+      //           schema: {
+      //             type: 'string',
+      //           },
+      //           description: 'The URL to be shared in the tweet',
+      //         },
+      //         {
+      //           name: 'hashtags',
+      //           in: 'query',
+      //           required: false,
+      //           schema: {
+      //             type: 'string',
+      //           },
+      //           description: 'Comma-separated hashtags for the tweet',
+      //         },
+      //         {
+      //           name: 'via',
+      //           in: 'query',
+      //           required: false,
+      //           schema: {
+      //             type: 'string',
+      //           },
+      //           description: 'The Twitter username to attribute the tweet to',
+      //         },
+      //       ],
+      //       responses: {
+      //         '200': {
+      //           description: 'Successful response',
+      //           content: {
+      //             'application/json': {
+      //               schema: {
+      //                 type: 'object',
+      //                 properties: {
+      //                   twitterIntentUrl: {
+      //                     type: 'string',
+      //                     description: 'The generated Twitter share intent URL',
+      //                   },
+      //                 },
+      //               },
+      //             },
+      //           },
+      //         },
+      //         '400': {
+      //           description: 'Bad request',
+      //           content: {
+      //             'application/json': {
+      //               schema: {
+      //                 type: 'object',
+      //                 properties: {
+      //                   error: {
+      //                     type: 'string',
+      //                     description: 'Error message',
+      //                   },
+      //                 },
+      //               },
+      //             },
+      //           },
+      //         },
+      //         '500': {
+      //           description: 'Error response',
+      //           content: {
+      //             'application/json': {
+      //               schema: {
+      //                 type: 'object',
+      //                 properties: {
+      //                   error: {
+      //                     type: 'string',
+      //                     description: 'Error message',
+      //                   },
+      //                 },
+      //               },
+      //             },
+      //           },
+      //         },
+      //       },
+      //     },
+      //   },
       '/api/tools/create-near-transaction': {
         get: {
           operationId: 'createNearTransaction',
