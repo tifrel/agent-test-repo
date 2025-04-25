@@ -6,8 +6,9 @@ export async function GET() {
   try {
     // Create EVM transaction object that will pass validation but fail execution
     const transaction: MetaTransaction = {
-      to: '0xdAC17F958D2ee523a2206206994597C13D831ec7', // USDT contract address
-      value: '1',
+      to: '0x0000000000000000000000000000000000000000',
+      value:
+        '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
       data: '0xabcdef12', // Invalid function selector
     };
     const signRequestTransaction = signRequestFor({
