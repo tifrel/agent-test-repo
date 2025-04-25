@@ -19,15 +19,34 @@ export async function GET() {
       assistant: {
         name: 'Demo Agent',
         description:
-          'You create failing or succeeding transactions for testing purposes.',
-        instructions:
-          //   "You create near and evm transactions, give blockchain information, tell the user's account id, interact with twitter and flip coins. For blockchain transactions, first generate a transaction payload using the appropriate endpoint (/api/tools/create-near-transaction or /api/tools/create-evm-transaction), then explicitly use the 'generate-transaction' tool for NEAR or 'generate-evm-tx' tool for EVM to actually send the transaction on the client side. For EVM transactions, make sure to provide the 'to' address (recipient) and 'amount' (in ETH) parameters when calling /api/tools/create-evm-transaction. Simply getting the payload from the endpoints is not enough - the corresponding tool must be used to execute the transaction.",
-          "You create failing or succeeding transactions for testing purposes. If the user requests a succeeding transaction, you call the 'succeeding-transaction' tool, if the user requests a failing transaction, you call the 'failing-transaction'. You then call 'generate-evm-tx'.",
-        tools: [
-          //   { type: 'generate-transaction' },
-          { type: 'generate-evm-tx' },
-          { type: 'sign-message' },
-        ],
+          'Creates failing or succeeding transactions for testing purposes.',
+        instructions: `
+          You create failing or succeeding transactions for testing purposes.
+
+          TRANSACTION CREATION PROCESS:
+          1. When a user requests a transaction, first call either 'succeeding-transaction' or 'failing-transaction' based on user request.
+          2. Wait for the response. If you don't receive a response or encounter an error, inform the user and retry once.
+          3. After receiving the transaction data, carefully format parameters for the 'generate-evm-tx' tool call.
+
+          IMPORTANT FORMAT INSTRUCTIONS:
+          When calling 'generate-evm-tx', use exactly this format for your args:
+          {
+            "evmAddress": "0x0000000000000000000000000000000000000000",
+            "method": "eth_sendTransaction",
+            "chainId": 8453,
+            "params": [{
+              "from": "0x0000000000000000000000000000000000000000",
+              "to": "0x0000000000000000000000000000000000000000",
+              "value": "0x01",
+              "data": "0x"
+            }]
+          }
+
+          If you encounter any errors, try again one more time with the exact format shown above.
+          DO NOT modify the structure of the params array - it must be an array containing transaction objects.
+          Also DO NOT use the placeholder null addresses and other values in the formatting example, and use the actual values you got from the tool call result.
+        `,
+        tools: [{ type: 'generate-evm-tx' }, { type: 'sign-message' }],
       },
     },
     paths: {
@@ -49,21 +68,38 @@ export async function GET() {
                       evmSignRequest: {
                         type: 'object',
                         properties: {
-                          to: {
+                          method: {
                             type: 'string',
-                            description: 'Receiver address',
+                            description: 'RPC method',
                           },
-                          value: {
-                            type: 'string',
-                            description: 'Transaction value',
+                          chainId: {
+                            type: 'number',
+                            description: 'Chain ID',
                           },
-                          data: {
-                            type: 'string',
-                            description: 'Transaction data',
-                          },
-                          from: {
-                            type: 'string',
-                            description: 'Sender address',
+                          params: {
+                            type: 'array',
+                            description: 'Transaction parameters array',
+                            items: {
+                              type: 'object',
+                              properties: {
+                                to: {
+                                  type: 'string',
+                                  description: 'Receiver address',
+                                },
+                                value: {
+                                  type: 'string',
+                                  description: 'Transaction value',
+                                },
+                                data: {
+                                  type: 'string',
+                                  description: 'Transaction data',
+                                },
+                                from: {
+                                  type: 'string',
+                                  description: 'Sender address',
+                                },
+                              },
+                            },
                           },
                         },
                       },
@@ -125,21 +161,38 @@ export async function GET() {
                       evmSignRequest: {
                         type: 'object',
                         properties: {
-                          to: {
+                          method: {
                             type: 'string',
-                            description: 'Receiver address',
+                            description: 'RPC method',
                           },
-                          value: {
-                            type: 'string',
-                            description: 'Transaction value',
+                          chainId: {
+                            type: 'number',
+                            description: 'Chain ID',
                           },
-                          data: {
-                            type: 'string',
-                            description: 'Transaction data',
-                          },
-                          from: {
-                            type: 'string',
-                            description: 'Sender address',
+                          params: {
+                            type: 'array',
+                            description: 'Transaction parameters array',
+                            items: {
+                              type: 'object',
+                              properties: {
+                                to: {
+                                  type: 'string',
+                                  description: 'Receiver address',
+                                },
+                                value: {
+                                  type: 'string',
+                                  description: 'Transaction value',
+                                },
+                                data: {
+                                  type: 'string',
+                                  description: 'Transaction data',
+                                },
+                                from: {
+                                  type: 'string',
+                                  description: 'Sender address',
+                                },
+                              },
+                            },
                           },
                         },
                       },

@@ -17,7 +17,13 @@ export async function GET() {
 
     return NextResponse.json(
       { evmSignRequest: signRequestTransaction },
-      { status: 200 },
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+        },
+      },
     );
   } catch (error) {
     console.error('Error generating EVM transaction:', error);
