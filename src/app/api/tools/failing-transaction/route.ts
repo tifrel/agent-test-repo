@@ -4,11 +4,11 @@ import { signRequestFor } from '@bitte-ai/agent-sdk';
 
 export async function GET() {
   try {
-    // Create EVM transaction object
+    // Create EVM transaction object that will pass validation but fail execution
     const transaction: MetaTransaction = {
-      to: 'foobar',
+      to: '0xdAC17F958D2ee523a2206206994597C13D831ec7', // USDT contract address
       value: '1',
-      data: '0x',
+      data: '0xabcdef12', // Invalid function selector
     };
     const signRequestTransaction = signRequestFor({
       chainId: 8453, // Base
